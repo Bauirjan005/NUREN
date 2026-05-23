@@ -230,11 +230,20 @@ const LessonView = () => {
     
     return (
       <div className="bg-white rounded-3xl p-6 border-4 border-slate-200 shadow-sm flex-1 flex flex-col items-center justify-center relative overflow-hidden pb-10">
-        <div className="text-center mb-16 z-10 w-full">
+        <div className="text-center mb-12 z-10 w-full">
           <p className="text-sm font-black text-purple-500 mb-4 uppercase tracking-widest bg-purple-50 inline-block px-4 py-2 rounded-2xl border-2 border-purple-200">Level {id}</p>
-          <h2 className="text-4xl font-black text-slate-800 px-4 leading-tight border-4 border-dashed border-slate-200 bg-slate-50 py-8 rounded-[40px]">
-            "{data}"
-          </h2>
+          <div className="relative">
+            <h2 className="text-3xl font-black text-slate-800 px-10 leading-tight border-4 border-dashed border-slate-200 bg-slate-50 py-10 rounded-[40px]">
+              "{data}"
+            </h2>
+            <button 
+              onClick={() => playAudio(data)}
+              className="absolute -top-4 -right-4 w-16 h-16 bg-blue-400 text-white rounded-full border-4 border-white border-b-8 shadow-lg flex items-center justify-center hover:scale-110 active:border-b-4 active:translate-y-1 transition-all"
+            >
+              <span className="text-3xl ml-1">🔊</span>
+            </button>
+          </div>
+          <p className="text-slate-500 font-bold mt-6 text-sm uppercase tracking-widest">Listen, then speak into the mic</p>
         </div>
         
         <div className={`absolute top-6 right-6 bg-green-100 border-4 border-green-300 px-4 py-2 rounded-2xl flex items-center space-x-2 transition-all duration-500 z-20 ${micStatus === 'done' ? 'opacity-100 translate-y-0 scale-110' : 'opacity-0 -translate-y-4'}`}>
@@ -242,7 +251,7 @@ const LessonView = () => {
           <span className="font-black text-green-600 text-lg uppercase tracking-wider">Perfect!</span>
         </div>
 
-        <div className="relative mt-8">
+        <div className="relative mt-4">
           {micStatus === 'recording' && <div className="absolute inset-0 bg-red-400 rounded-full animate-ping opacity-60"></div>}
           <button 
             onClick={handleMicClick} 

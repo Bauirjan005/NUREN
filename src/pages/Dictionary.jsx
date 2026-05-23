@@ -8,6 +8,14 @@ const Dictionary = () => {
     word.en.toLowerCase().includes(searchTerm.toLowerCase()) || 
     word.ru.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const playAudio = (text, e) => {
+    e.stopPropagation();
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.85;
+    window.speechSynthesis.speak(utterance);
+  };
 
   return (
     <div className="flex flex-col h-full space-y-6 pb-20">
@@ -36,13 +44,15 @@ const Dictionary = () => {
       <div className="space-y-4 pt-4">
         {filteredWords.length > 0 ? (
           filteredWords.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-3xl p-5 border-4 border-slate-200 border-b-8 shadow-sm flex items-center justify-between cursor-pointer hover:-translate-y-1 hover:border-b-[10px] active:border-b-0 active:translate-y-2 transition-all group">
+            <div key={idx} onClick={(e) => playAudio(item.en, e)} className="bg-white rounded-3xl p-5 border-4 border-slate-200 border-b-8 shadow-sm flex items-center justify-between cursor-pointer hover:-translate-y-1 hover:border-b-[10px] hover:border-blue-300 active:border-b-0 active:translate-y-2 transition-all group">
               <div className="flex flex-col">
                 <span className="text-2xl font-black text-slate-800 group-hover:text-blue-500 transition-colors">{item.en}</span>
                 <span className="text-lg font-bold text-slate-500">{item.ru}</span>
               </div>
               
-              <button className="w-14 h-14 bg-slate-100 hover:bg-blue-100 border-2 border-slate-200 hover:border-blue-300 border-b-4 rounded-2xl flex items-center justify-center active:border-b-0 active:translate-y-1 transition-all">
+              <button 
+                className="w-14 h-14 bg-slate-100 group-hover:bg-blue-100 border-2 border-slate-200 group-hover:border-blue-300 border-b-4 rounded-2xl flex items-center justify-center transition-all"
+              >
                 <span className="text-2xl">🔊</span>
               </button>
             </div>
